@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { config } from './config';
 import Background from './components/Background';
 import Hero from './components/Hero';
