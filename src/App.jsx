@@ -14,6 +14,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [celebrating, setCelebrating] = useState(false);
   const [showCake, setShowCake] = useState(false);
+  const [shouldPlayMusic, setShouldPlayMusic] = useState(false);
 
   useEffect(() => {
     // Check for saved theme preference
@@ -33,6 +34,7 @@ function App() {
   const handleCelebrate = () => {
     setCelebrating(true);
     setShowCake(true);
+    setShouldPlayMusic(true);
     
     // Trigger confetti
     if (typeof window !== 'undefined' && window.confetti) {
@@ -75,6 +77,7 @@ function App() {
         defaultSong={config.music.defaultSong}
         autoPlay={config.music.autoPlay}
         defaultVolume={config.music.volume}
+        shouldPlay={shouldPlayMusic}
       />
     </div>
   );

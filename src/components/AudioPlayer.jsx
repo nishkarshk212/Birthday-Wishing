@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import anime from 'animejs';
 import { Play, Pause, Volume2, VolumeX, Upload, Music } from 'lucide-react';
 
-const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
+const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume, shouldPlay }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(defaultVolume);
-  const [progress, setProgress] = useState(0);
   const [customSong, setCustomSong] = useState(null);
   const [showUpload, setShowUpload] = useState(false);
   const audioRef = useRef(null);
@@ -13,12 +12,15 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
-      if (autoPlay && !customSong) {
-        audioRef.current.play().catch(() => {});
-        setIsPlaying(true);
-      }
     }
-  }, [autoPlay, customSong]);
+  }, [volume]);
+
+  useEffect(() => {
+    if (shouldPlay && audioRef.current && !isPlaying) {
+      audioRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  }, [shouldPlay]);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -39,19 +41,6 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
     }
   };
 
-  const handleProgress = () => {
-    if (audioRef.current) {
-      const progress = (audioRef.current.currentTime / audioRef.current.duration) * 100;
-      setProgress(progress || 0);
-    }
-  };
-
-  const handleSeek = (e) => {
-    if (audioRef.current) {
-      const seekTime = (parseFloat(e.target.value) / 100) * audioRef.current.duration;
-      audioRef.current.currentTime = seekTime;
-    }
-  };
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -111,18 +100,6 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-1" />}
           </button>
 
-          {/* Progress Bar */}
-          <div className="flex-1 min-w-[150px] md:min-w-[300px]">
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={progress}
-              onChange={handleSeek}
-              className="w-full h-2 bg-gray-300 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-pink-500"
-            />
-          </div>
-
           {/* Volume Control */}
           <div className="flex items-center gap-2">
             <button
@@ -171,7 +148,6 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
         <audio
           ref={audioRef}
           src={currentSong}
-          onTimeUpdate={handleProgress}
           onEnded={() => setIsPlaying(false)}
         />
       </div>

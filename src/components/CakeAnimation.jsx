@@ -105,28 +105,40 @@ const CakeAnimation = () => {
           Make a wish and blow out the candles!
         </p>
 
-        <div className="relative h-64 flex items-end justify-center">
+        <div className="relative h-80 flex items-end justify-center">
           {/* Cake Base */}
           <div className="relative" ref={cakeRef}>
             {/* Cake Layers */}
             <div className="relative">
               {/* Bottom Layer */}
-              <div className="w-48 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-b-3xl relative cake-bottom">
-                <div className="absolute top-0 left-0 right-0 h-4 bg-yellow-300 rounded-t-lg" />
+              <div className="w-56 h-24 bg-gradient-to-r from-amber-400 to-orange-500 rounded-b-3xl relative cake-bottom shadow-xl">
+                <div className="absolute top-0 left-0 right-0 h-6 bg-amber-300 rounded-t-lg" />
+                {/* Decorative elements */}
+                <div className="absolute bottom-4 left-6 w-4 h-4 bg-red-500 rounded-full shadow-md" />
+                <div className="absolute bottom-4 right-8 w-4 h-4 bg-green-500 rounded-full shadow-md" />
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-md" />
               </div>
 
               {/* Middle Layer */}
-              <div className="w-40 h-16 bg-gradient-to-r from-pink-400 to-pink-500 rounded-b-2xl relative mx-auto -mt-2 cake-middle">
-                <div className="absolute top-0 left-0 right-0 h-3 bg-pink-300 rounded-t-lg" />
+              <div className="w-48 h-20 bg-gradient-to-r from-pink-400 to-pink-600 rounded-b-2xl relative mx-auto -mt-3 cake-middle shadow-xl">
+                <div className="absolute top-0 left-0 right-0 h-4 bg-pink-300 rounded-t-lg" />
+                {/* Decorative elements */}
+                <div className="absolute bottom-3 left-4 w-3 h-3 bg-yellow-400 rounded-full shadow-md" />
+                <div className="absolute bottom-3 right-4 w-3 h-3 bg-purple-400 rounded-full shadow-md" />
               </div>
 
               {/* Top Layer */}
-              <div className="w-32 h-12 bg-gradient-to-r from-purple-400 to-purple-500 rounded-b-xl relative mx-auto -mt-2 cake-top">
-                <div className="absolute top-0 left-0 right-0 h-2 bg-purple-300 rounded-t-lg" />
+              <div className="w-40 h-16 bg-gradient-to-r from-purple-400 to-purple-600 rounded-b-xl relative mx-auto -mt-3 cake-top shadow-xl">
+                <div className="absolute top-0 left-0 right-0 h-3 bg-purple-300 rounded-t-lg" />
+                {/* Cherry on top */}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="w-6 h-6 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-lg" />
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-1 h-3 bg-green-600 rounded-t-full" />
+                </div>
               </div>
 
               {/* Candles */}
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 flex gap-2">
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 flex gap-3">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
@@ -134,11 +146,11 @@ const CakeAnimation = () => {
                     className="relative"
                     style={{ opacity: 0 }}
                   >
-                    <div className="w-2 h-8 bg-gradient-to-r from-red-400 to-red-500 rounded-t-sm" />
+                    <div className="w-3 h-10 bg-gradient-to-r from-red-400 to-red-600 rounded-t-sm shadow-md" />
                     {lit && (
-                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <div className="w-3 h-4 bg-gradient-to-t from-orange-400 to-yellow-300 rounded-full animate-pulse-glow" />
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-6 bg-gradient-to-t from-orange-300 to-transparent rounded-full" />
+                      <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                        <div className="w-4 h-5 bg-gradient-to-t from-orange-400 to-yellow-300 rounded-full animate-pulse-glow shadow-lg" />
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1.5 h-7 bg-gradient-to-t from-orange-300 to-transparent rounded-full" />
                       </div>
                     )}
                   </div>
@@ -146,10 +158,18 @@ const CakeAnimation = () => {
               </div>
 
               {/* Frosting drips */}
-              <div className="absolute top-0 left-4 w-3 h-6 bg-yellow-300 rounded-b-full" />
-              <div className="absolute top-0 right-6 w-3 h-8 bg-yellow-300 rounded-b-full" />
-              <div className="absolute top-0 left-1/2 w-3 h-5 bg-yellow-300 rounded-b-full" />
+              <div className="absolute top-0 left-6 w-4 h-8 bg-amber-300 rounded-b-full shadow-md" />
+              <div className="absolute top-0 right-8 w-4 h-10 bg-amber-300 rounded-b-full shadow-md" />
+              <div className="absolute top-0 left-1/2 w-4 h-7 bg-amber-300 rounded-b-full shadow-md" />
+              
+              {/* Sprinkles */}
+              <div className="absolute top-2 left-10 w-2 h-2 bg-white rotate-45 rounded-sm" />
+              <div className="absolute top-4 right-12 w-2 h-2 bg-yellow-300 rotate-12 rounded-sm" />
+              <div className="absolute top-3 left-1/3 w-2 h-2 bg-pink-300 -rotate-12 rounded-sm" />
             </div>
+            
+            {/* Cake plate */}
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-4 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full shadow-xl" />
           </div>
 
           {/* Sparkles */}
