@@ -2,7 +2,7 @@
 export const config = {
   // Birthday person's information
   birthdayPerson: {
-    name: "Sarah",
+    name: "Anamika",
     age: 25,
     message: "Wishing you a day filled with love, laughter, and all your favorite things! May this year bring you endless joy and wonderful adventures.",
     birthdayDate: "2024-12-25", // Format: YYYY-MM-DD
