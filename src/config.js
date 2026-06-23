@@ -30,7 +30,7 @@ export const config = {
 
   // Default music (you can replace with your own MP3 file)
   music: {
-    defaultSong: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Replace with your MP3 URL
+    defaultSong: "https://www.image2url.com/r2/default/audio/1782176073973-581ca5eb-b222-4012-98c7-634df54107c7.mp3", // Replace with your MP3 URL
     autoPlay: true,
     volume: 0.5,
   },
