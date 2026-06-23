@@ -87,17 +87,17 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume, shouldPlay }) => {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="glassmorphism rounded-2xl p-4 shadow-2xl audio-player" style={{ opacity: 0 }}>
-        <div className="flex items-center gap-4">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] md:w-auto">
+      <div className="glassmorphism rounded-2xl p-3 md:p-4 shadow-2xl audio-player" style={{ opacity: 0 }}>
+        <div className="flex items-center justify-center gap-3 md:gap-4">
           {/* Play/Pause Button */}
           <button
             onClick={togglePlay}
             onMouseEnter={handlePlayBtnHover}
             onMouseLeave={handlePlayBtnLeave}
-            className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-pink-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all play-btn"
+            className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-yellow-500 to-pink-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all play-btn"
           >
-            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-1" />}
+            {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-1" />}
           </button>
 
           {/* Volume Control */}
@@ -106,7 +106,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume, shouldPlay }) => {
               onClick={() => setVolume(volume === 0 ? defaultVolume : 0)}
               className="text-gray-300 hover:text-primary transition-colors"
             >
-              {volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              {volume === 0 ? <VolumeX className="w-4 h-4 md:w-5 md:h-5" /> : <Volume2 className="w-4 h-4 md:w-5 md:h-5" />}
             </button>
             <input
               type="range"
@@ -115,7 +115,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume, shouldPlay }) => {
               step="0.1"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-20 h-2 bg-gray-300 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
+              className="w-16 md:w-20 h-2 bg-gray-300 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
             />
           </div>
 
@@ -124,7 +124,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume, shouldPlay }) => {
             onClick={() => setShowUpload(!showUpload)}
             className="text-gray-300 hover:text-primary transition-colors"
           >
-            <Upload className="w-5 h-5" />
+            <Upload className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         </div>
 
