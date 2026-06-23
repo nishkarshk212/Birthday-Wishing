@@ -1,146 +1,149 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import anime from 'animejs';
 import { config } from '../config';
 
 const Background = () => {
-  const [particles, setParticles] = useState([]);
-  const [balloons, setBalloons] = useState([]);
-  const [hearts, setHearts] = useState([]);
+  const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
 
   useEffect(() => {
-    // Create particles
-    const newParticles = Array.from({ length: config.animations.particleCount }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 4 + 2,
-      duration: Math.random() * 10 + 10,
-      delay: Math.random() * 5,
-    }));
-    setParticles(newParticles);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // Create balloons
-    const newBalloons = Array.from({ length: config.animations.balloonCount }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: 100 + Math.random() * 20,
-      size: Math.random() * 30 + 40,
-      color: ['#FF6B9D', '#C44569', '#FFD93D', '#6BCB77', '#4D96FF'][Math.floor(Math.random() * 5)],
-      duration: Math.random() * 15 + 15,
-      delay: Math.random() * 10,
-    }));
-    setBalloons(newBalloons);
+    // Create elegant particles
+    const particleCount = config.animations.particleCount;
+    const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#FFFFFF', '#FFA500'];
+    
+    for (let i = 0; i < particleCount; i++) {
+      particlesRef.current.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 3 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.2,
+      });
+    }
 
-    // Create hearts
-    const newHearts = Array.from({ length: config.animations.heartCount }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 20 + 15,
-      duration: Math.random() * 8 + 8,
-      delay: Math.random() * 5,
-    }));
-    setHearts(newHearts);
+    // Animate particles with anime.js
+    const animateParticles = () => {
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw gradient overlay
+      const gradient = ctx.createRadialGradient(
+        canvas.width / 2, canvas.height / 2, 0,
+        canvas.width / 2, canvas.height / 2, canvas.width / 2
+      );
+      gradient.addColorStop(0, 'rgba(20, 20, 30, 0.3)');
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach((particle) => {
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color;
+        ctx.globalAlpha = particle.opacity;
+        ctx.fill();
+        
+        // Add glow effect
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = particle.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+      });
+
+      // Draw connecting lines for nearby particles
+      particlesRef.current.forEach((particle, i) => {
+        particlesRef.current.slice(i + 1).forEach((otherParticle) => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.strokeStyle = `rgba(255, 215, 0, ${0.1 * (1 - distance / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animateParticles);
+    };
+
+    animateParticles();
+
+    // Add floating orbs animation
+    const createOrb = () => {
+      const orb = document.createElement('div');
+      orb.className = 'fixed rounded-full pointer-events-none';
+      orb.style.width = Math.random() * 100 + 50 + 'px';
+      orb.style.height = orb.style.width;
+      orb.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}33, transparent)`;
+      orb.style.left = Math.random() * 100 + '%';
+      orb.style.top = Math.random() * 100 + '%';
+      orb.style.filter = 'blur(40px)';
+      orb.style.zIndex = '1';
+      document.body.appendChild(orb);
+
+      anime({
+        targets: orb,
+        translateX: [
+          { value: anime.random(-200, 200), duration: 3000 },
+          { value: anime.random(-200, 200), duration: 3000 },
+        ],
+        translateY: [
+          { value: anime.random(-200, 200), duration: 3000 },
+          { value: anime.random(-200, 200), duration: 3000 },
+        ],
+        scale: [
+          { value: [1, 1.5], duration: 3000 },
+          { value: [1.5, 1], duration: 3000 },
+        ],
+        opacity: [0.3, 0.6, 0.3],
+        easing: 'easeInOutQuad',
+        duration: 6000,
+        loop: true,
+      });
+
+      return orb;
+    };
+
+    const orbs = [];
+    for (let i = 0; i < 5; i++) {
+      orbs.push(createOrb());
+    }
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      orbs.forEach(orb => orb.remove());
+    };
   }, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-purple-50 to-yellow-50 dark:from-purple-900 dark:via-pink-900 dark:to-indigo-900 opacity-50" />
-      
-      {/* Glowing particles */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full bg-white dark:bg-yellow-200 opacity-60"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: particle.size,
-            height: particle.size,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.3, 0.8, 0.3],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: particle.duration,
-            delay: particle.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* Floating balloons */}
-      {balloons.map((balloon) => (
-        <motion.div
-          key={balloon.id}
-          className="absolute"
-          style={{
-            left: `${balloon.x}%`,
-          }}
-          animate={{
-            y: [balloon.y, -20],
-            x: [balloon.x, balloon.x + (Math.random() - 0.5) * 10],
-          }}
-          transition={{
-            duration: balloon.duration,
-            delay: balloon.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div
-            className="relative"
-            style={{
-              width: balloon.size,
-              height: balloon.size * 1.2,
-            }}
-          >
-            <div
-              className="absolute rounded-full opacity-80"
-              style={{
-                width: balloon.size,
-                height: balloon.size,
-                backgroundColor: balloon.color,
-                boxShadow: `0 0 20px ${balloon.color}`,
-              }}
-            />
-            <div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-8 bg-gray-400 opacity-50"
-              style={{ height: balloon.size * 0.5 }}
-            />
-          </div>
-        </motion.div>
-      ))}
-
-      {/* Floating hearts */}
-      {hearts.map((heart) => (
-        <motion.div
-          key={heart.id}
-          className="absolute text-pink-400 dark:text-pink-300 opacity-60"
-          style={{
-            left: `${heart.x}%`,
-            top: `${heart.y}%`,
-            fontSize: heart.size,
-          }}
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 10, -10, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: heart.duration,
-            delay: heart.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          ❤️
-        </motion.div>
-      ))}
+      <canvas ref={canvasRef} className="absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
     </div>
   );
 };

@@ -11,20 +11,20 @@ export const config = {
   // Theme colors (will be used as CSS variables)
   colors: {
     light: {
-      primary: "#FF6B9D",
-      secondary: "#C44569",
-      accent: "#FFD93D",
-      background: "#FFF5F7",
-      surface: "#FFFFFF",
-      text: "#2D3436",
+      primary: "#FFD700",
+      secondary: "#FF6B6B",
+      accent: "#4ECDC4",
+      background: "#0A0A0A",
+      surface: "#1A1A1A",
+      text: "#FFFFFF",
     },
     dark: {
-      primary: "#FF6B9D",
-      secondary: "#C44569",
-      accent: "#FFD93D",
-      background: "#1A1A2E",
-      surface: "#16213E",
-      text: "#EAEAEA",
+      primary: "#FFD700",
+      secondary: "#FF6B6B",
+      accent: "#4ECDC4",
+      background: "#000000",
+      surface: "#111111",
+      text: "#FFFFFF",
     },
   },
 

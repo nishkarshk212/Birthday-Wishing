@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Facebook, Twitter, MessageCircle, Share2 } from 'lucide-react';
+import React, { useEffect } from 'react';
+import anime from 'animejs';
+import { Facebook, Twitter, Whatsapp, Share } from 'iconsax-react';
 
 const SocialShare = ({ links }) => {
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -38,78 +38,65 @@ const SocialShare = ({ links }) => {
     }
   };
 
+  useEffect(() => {
+    anime({
+      targets: '.share-btn',
+      opacity: [0, 1],
+      translateY: [20, 0],
+      delay: anime.stagger(100),
+      duration: 500,
+      easing: 'easeOutQuad',
+    });
+  }, []);
+
   return (
     <section className="py-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-4 text-primary"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
           Share the Joy 🎉
-        </motion.h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-12">
+        </h2>
+        <p className="text-gray-300 mb-12">
           Spread the birthday cheer with your friends and family!
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
           {navigator.share && (
-            <motion.button
+            <button
               onClick={handleNativeShare}
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
+              style={{ opacity: 0 }}
             >
-              <Share2 className="w-5 h-5" />
+              <Share className="w-5 h-5" variant="Bold" />
               Share
-            </motion.button>
+            </button>
           )}
 
-          <motion.button
+          <button
             onClick={() => handleShare('facebook')}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
+            style={{ opacity: 0 }}
           >
-            <Facebook className="w-5 h-5" />
+            <Facebook className="w-5 h-5" variant="Bold" />
             Facebook
-          </motion.button>
+          </button>
 
-          <motion.button
+          <button
             onClick={() => handleShare('twitter')}
-            className="flex items-center gap-2 px-6 py-3 bg-sky-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            className="flex items-center gap-2 px-6 py-3 bg-sky-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
+            style={{ opacity: 0 }}
           >
-            <Twitter className="w-5 h-5" />
+            <Twitter className="w-5 h-5" variant="Bold" />
             Twitter
-          </motion.button>
+          </button>
 
-          <motion.button
+          <button
             onClick={() => handleShare('whatsapp')}
-            className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
+            style={{ opacity: 0 }}
           >
-            <MessageCircle className="w-5 h-5" />
+            <Whatsapp className="w-5 h-5" variant="Bold" />
             WhatsApp
-          </motion.button>
+          </button>
         </div>
       </div>
     </section>

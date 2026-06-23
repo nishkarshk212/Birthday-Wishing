@@ -1,30 +1,46 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import anime from 'animejs';
+import { Sun, Moon } from 'iconsax-react';
 
 const ThemeToggle = ({ darkMode, onToggle }) => {
+  const toggleRef = useRef(null);
+  const iconRef = useRef(null);
+
+  useEffect(() => {
+    anime({
+      targets: toggleRef.current,
+      translateX: [50, 0],
+      opacity: [0, 1],
+      duration: 500,
+      delay: 500,
+      easing: 'easeOutQuad',
+    });
+  }, []);
+
+  useEffect(() => {
+    anime({
+      targets: iconRef.current,
+      rotate: darkMode ? 180 : 0,
+      duration: 300,
+      easing: 'easeOutQuad',
+    });
+  }, [darkMode]);
+
   return (
-    <motion.button
+    <button
+      ref={toggleRef}
       onClick={onToggle}
       className="fixed top-4 right-4 z-50 p-3 glassmorphism rounded-full shadow-lg hover:shadow-xl transition-all"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.5 }}
+      style={{ opacity: 0 }}
     >
-      <motion.div
-        initial={false}
-        animate={{ rotate: darkMode ? 180 : 0 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div ref={iconRef}>
         {darkMode ? (
-          <Sun className="w-6 h-6 text-yellow-400" />
+          <Sun className="w-6 h-6 text-yellow-400" variant="Bold" />
         ) : (
-          <Moon className="w-6 h-6 text-purple-600" />
+          <Moon className="w-6 h-6 text-purple-600" variant="Bold" />
         )}
-      </motion.div>
-    </motion.button>
+      </div>
+    </button>
   );
 };
 

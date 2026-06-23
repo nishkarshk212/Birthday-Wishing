@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX, Upload, Music } from 'lucide-react';
+import anime from 'animejs';
+import { Play, Pause, VolumeHigh, VolumeMute, DirectSend, MusicNote } from 'iconsax-react';
 
 const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -68,24 +68,48 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
 
   const currentSong = customSong || defaultSong;
 
+  useEffect(() => {
+    anime({
+      targets: '.audio-player',
+      translateY: [100, 0],
+      opacity: [0, 1],
+      duration: 500,
+      delay: 1000,
+      easing: 'easeOutQuad',
+    });
+  }, []);
+
+  const handlePlayBtnHover = () => {
+    anime({
+      targets: '.play-btn',
+      scale: 1.1,
+      duration: 200,
+      easing: 'easeOutQuad',
+    });
+  };
+
+  const handlePlayBtnLeave = () => {
+    anime({
+      targets: '.play-btn',
+      scale: 1,
+      duration: 200,
+      easing: 'easeOutQuad',
+    });
+  };
+
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <motion.div
-        className="glassmorphism rounded-2xl p-4 shadow-2xl"
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-      >
+      <div className="glassmorphism rounded-2xl p-4 shadow-2xl audio-player" style={{ opacity: 0 }}>
         <div className="flex items-center gap-4">
           {/* Play/Pause Button */}
-          <motion.button
+          <button
             onClick={togglePlay}
-            className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            onMouseEnter={handlePlayBtnHover}
+            onMouseLeave={handlePlayBtnLeave}
+            className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-pink-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all play-btn"
           >
-            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-1" />}
-          </motion.button>
+            {isPlaying ? <Pause className="w-5 h-5" variant="Bold" /> : <Play className="w-5 h-5 ml-1" variant="Bold" />}
+          </button>
 
           {/* Progress Bar */}
           <div className="flex-1 min-w-[150px] md:min-w-[300px]">
@@ -103,9 +127,9 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setVolume(volume === 0 ? defaultVolume : 0)}
-              className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+              className="text-gray-300 hover:text-primary transition-colors"
             >
-              {volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              {volume === 0 ? <VolumeMute className="w-5 h-5" variant="Bold" /> : <VolumeHigh className="w-5 h-5" variant="Bold" />}
             </button>
             <input
               type="range"
@@ -119,26 +143,19 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
           </div>
 
           {/* Upload Button */}
-          <motion.button
+          <button
             onClick={() => setShowUpload(!showUpload)}
-            className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className="text-gray-300 hover:text-primary transition-colors"
           >
-            <Upload className="w-5 h-5" />
-          </motion.button>
+            <DirectSend className="w-5 h-5" variant="Bold" />
+          </button>
         </div>
 
         {/* File Upload Input */}
         {showUpload && (
-          <motion.div
-            className="mt-3 pt-3 border-t border-gray-300 dark:border-gray-600"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-600 dark:text-gray-300 hover:text-primary transition-colors">
-              <Music className="w-4 h-4" />
+          <div className="mt-3 pt-3 border-t border-gray-600">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-300 hover:text-primary transition-colors">
+              <MusicNote className="w-4 h-4" variant="Bold" />
               <span>Upload your own song</span>
               <input
                 type="file"
@@ -147,7 +164,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
                 className="hidden"
               />
             </label>
-          </motion.div>
+          </div>
         )}
 
         {/* Hidden Audio Element */}
@@ -157,7 +174,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
           onTimeUpdate={handleProgress}
           onEnded={() => setIsPlaying(false)}
         />
-      </motion.div>
+      </div>
     </div>
   );
 };
