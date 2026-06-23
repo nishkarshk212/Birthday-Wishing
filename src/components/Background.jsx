@@ -5,6 +5,7 @@ import { config } from '../config';
 const Background = () => {
   const canvasRef = useRef(null);
   const particlesRef = useRef([]);
+  const bgRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,6 +34,35 @@ const Background = () => {
         opacity: Math.random() * 0.5 + 0.2,
       });
     }
+
+    // Background colors for transitions
+    const bgColors = [
+      '#000000',
+      '#0A0A0A',
+      '#1A1A2E',
+      '#16213E',
+      '#0F0F23',
+      '#1A1A1A',
+      '#0D0D0D',
+    ];
+    let currentColorIndex = 0;
+
+    // Animate background color changes
+    const animateBackground = () => {
+      if (bgRef.current) {
+        anime({
+          targets: bgRef.current,
+          backgroundColor: bgColors[currentColorIndex],
+          duration: 1000,
+          easing: 'easeInOutQuad',
+        });
+      }
+      currentColorIndex = (currentColorIndex + 1) % bgColors.length;
+    };
+
+    // Start background color animation
+    animateBackground();
+    const bgInterval = setInterval(animateBackground, 2000);
 
     // Animate particles with anime.js
     const animateParticles = () => {
@@ -136,12 +166,18 @@ const Background = () => {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      clearInterval(bgInterval);
       orbs.forEach(orb => orb.remove());
     };
   }, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div 
+        ref={bgRef}
+        className="absolute inset-0 transition-colors duration-1000"
+        style={{ backgroundColor: '#000000' }}
+      />
       <canvas ref={canvasRef} className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
     </div>
