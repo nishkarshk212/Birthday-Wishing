@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import anime from 'animejs';
-import { CloseCircle, ZoomIn, ArrowLeft2, ArrowRight2, Play } from 'iconsax-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const PhotoGallery = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -77,7 +77,7 @@ const PhotoGallery = ({ images }) => {
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                <ZoomIn className="w-8 h-8 text-white" variant="Bold" />
+                <ZoomIn className="w-8 h-8 text-white" />
               </div>
             </div>
           ))}
@@ -93,7 +93,7 @@ const PhotoGallery = ({ images }) => {
               className="absolute top-4 right-4 text-white hover:text-primary transition-colors z-10"
               onClick={closeLightbox}
             >
-              <CloseCircle className="w-8 h-8" variant="Bold" />
+              <X className="w-8 h-8" />
             </button>
 
             <button
@@ -103,7 +103,7 @@ const PhotoGallery = ({ images }) => {
                 prevImage();
               }}
             >
-              <ArrowLeft2 className="w-10 h-10" variant="Bold" />
+              <ChevronLeft className="w-10 h-10" />
             </button>
 
             <button
@@ -113,7 +113,7 @@ const PhotoGallery = ({ images }) => {
                 nextImage();
               }}
             >
-              <ArrowRight2 className="w-10 h-10" variant="Bold" />
+              <ChevronRight className="w-10 h-10" />
             </button>
 
             <button
@@ -123,7 +123,7 @@ const PhotoGallery = ({ images }) => {
                 toggleSlideshow();
               }}
             >
-              <Play className="w-5 h-5" variant="Bold" />
+              <Play className="w-5 h-5" />
               {isSlideshow ? 'Pause' : 'Slideshow'}
             </button>
 

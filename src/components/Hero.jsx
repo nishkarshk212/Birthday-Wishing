@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import anime from 'animejs';
-import { Sparkle, Timer } from 'iconsax-react';
+import { Sparkles, Timer } from 'lucide-react';
 
 const Hero = ({ name, message, birthdayDate, onCelebrate, celebrating }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -89,7 +89,7 @@ const Hero = ({ name, message, birthdayDate, onCelebrate, celebrating }) => {
     <section className="min-h-screen flex items-center justify-center px-4 py-20 relative">
       <div className="max-w-4xl mx-auto text-center" ref={heroRef}>
         <div className="flex justify-center mb-6" ref={sparkleRef}>
-          <Sparkle className="w-16 h-16 text-yellow-400" variant="Bold" />
+          <Sparkles className="w-16 h-16 text-yellow-400" />
         </div>
 
         <h1 className="font-script text-6xl md:text-8xl lg:text-9xl mb-6 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
@@ -107,7 +107,7 @@ const Hero = ({ name, message, birthdayDate, onCelebrate, celebrating }) => {
         {/* Countdown Timer */}
         <div className="mb-10">
           <div className="flex items-center justify-center gap-2 mb-4 text-gray-300">
-            <Timer className="w-5 h-5" variant="Bold" />
+            <Timer className="w-5 h-5" />
             <span className="font-semibold">Countdown to the big day!</span>
           </div>
           <div className="flex justify-center gap-4 md:gap-8">
@@ -142,7 +142,7 @@ const Hero = ({ name, message, birthdayDate, onCelebrate, celebrating }) => {
           className="group relative px-8 py-4 bg-gradient-to-r from-yellow-500 to-pink-600 text-white font-bold text-lg md:text-xl rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
-            <Sparkle className="w-6 h-6" variant="Bold" />
+            <Sparkles className="w-6 h-6" />
             {celebrating ? '🎉 Celebrating! 🎉' : 'Celebrate!'}
           </span>
           <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

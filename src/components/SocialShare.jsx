@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import anime from 'animejs';
-import { Facebook, Twitter, Whatsapp, Share } from 'iconsax-react';
+import { Facebook, Twitter, MessageCircle, Share2 } from 'lucide-react';
 
 const SocialShare = ({ links }) => {
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -66,7 +66,7 @@ const SocialShare = ({ links }) => {
               className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
               style={{ opacity: 0 }}
             >
-              <Share className="w-5 h-5" variant="Bold" />
+              <Share2 className="w-5 h-5" />
               Share
             </button>
           )}
@@ -76,7 +76,7 @@ const SocialShare = ({ links }) => {
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
             style={{ opacity: 0 }}
           >
-            <Facebook className="w-5 h-5" variant="Bold" />
+            <Facebook className="w-5 h-5" />
             Facebook
           </button>
 
@@ -85,7 +85,7 @@ const SocialShare = ({ links }) => {
             className="flex items-center gap-2 px-6 py-3 bg-sky-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
             style={{ opacity: 0 }}
           >
-            <Twitter className="w-5 h-5" variant="Bold" />
+            <Twitter className="w-5 h-5" />
             Twitter
           </button>
 
@@ -94,7 +94,7 @@ const SocialShare = ({ links }) => {
             className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all share-btn"
             style={{ opacity: 0 }}
           >
-            <Whatsapp className="w-5 h-5" variant="Bold" />
+            <MessageCircle className="w-5 h-5" />
             WhatsApp
           </button>
         </div>

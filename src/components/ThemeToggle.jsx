@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
-import { Sun, Moon } from 'iconsax-react';
+import { Sun, Moon } from 'lucide-react';
 
 const ThemeToggle = ({ darkMode, onToggle }) => {
   const toggleRef = useRef(null);
@@ -35,9 +35,9 @@ const ThemeToggle = ({ darkMode, onToggle }) => {
     >
       <div ref={iconRef}>
         {darkMode ? (
-          <Sun className="w-6 h-6 text-yellow-400" variant="Bold" />
+          <Sun className="w-6 h-6 text-yellow-400" />
         ) : (
-          <Moon className="w-6 h-6 text-purple-600" variant="Bold" />
+          <Moon className="w-6 h-6 text-purple-600" />
         )}
       </div>
     </button>

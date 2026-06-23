@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import anime from 'animejs';
-import { Play, Pause, VolumeHigh, VolumeMute, DirectSend, MusicNote } from 'iconsax-react';
+import { Play, Pause, Volume2, VolumeX, Upload, Music } from 'lucide-react';
 
 const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -108,7 +108,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
             onMouseLeave={handlePlayBtnLeave}
             className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-pink-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all play-btn"
           >
-            {isPlaying ? <Pause className="w-5 h-5" variant="Bold" /> : <Play className="w-5 h-5 ml-1" variant="Bold" />}
+            {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-1" />}
           </button>
 
           {/* Progress Bar */}
@@ -129,7 +129,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
               onClick={() => setVolume(volume === 0 ? defaultVolume : 0)}
               className="text-gray-300 hover:text-primary transition-colors"
             >
-              {volume === 0 ? <VolumeMute className="w-5 h-5" variant="Bold" /> : <VolumeHigh className="w-5 h-5" variant="Bold" />}
+              {volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
             </button>
             <input
               type="range"
@@ -147,7 +147,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
             onClick={() => setShowUpload(!showUpload)}
             className="text-gray-300 hover:text-primary transition-colors"
           >
-            <DirectSend className="w-5 h-5" variant="Bold" />
+            <Upload className="w-5 h-5" />
           </button>
         </div>
 
@@ -155,7 +155,7 @@ const AudioPlayer = ({ defaultSong, autoPlay, defaultVolume }) => {
         {showUpload && (
           <div className="mt-3 pt-3 border-t border-gray-600">
             <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-300 hover:text-primary transition-colors">
-              <MusicNote className="w-4 h-4" variant="Bold" />
+              <Music className="w-4 h-4" />
               <span>Upload your own song</span>
               <input
                 type="file"

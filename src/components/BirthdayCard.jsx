@@ -1,23 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
-import { Heart, Star, Gift } from 'iconsax-react';
+import { Heart, Star, Gift } from 'lucide-react';
 
 const BirthdayCard = () => {
   const cards = [
     {
-      icon: <Heart className="w-12 h-12" variant="Bold" />,
+      icon: <Heart className="w-12 h-12" />,
       title: "With Love",
       message: "May your heart be filled with endless love and joy today and always.",
       color: "from-pink-500 to-rose-500",
     },
     {
-      icon: <Star className="w-12 h-12" variant="Bold" />,
+      icon: <Star className="w-12 h-12" />,
       title: "Shine Bright",
       message: "You are a star that lights up every room. Keep shining bright!",
       color: "from-yellow-500 to-orange-500",
     },
     {
-      icon: <Gift className="w-12 h-12" variant="Bold" />,
+      icon: <Gift className="w-12 h-12" />,
       title: "Special Gift",
       message: "The greatest gift is having you in our lives. Happy Birthday!",
       color: "from-purple-500 to-indigo-500",
